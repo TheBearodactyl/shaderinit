@@ -20,13 +20,13 @@ jobs:
       run: cargo build --verbose
     
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: rust-artifact
         path: target/debug/
     
     - name: Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: rust-artifact
         path: downloaded-artifact/
