@@ -17,7 +17,7 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: linux-binaries
         path: target/debug/
@@ -32,12 +32,12 @@ jobs:
       run: cargo build --verbose
       shell: bash
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: windows-binaries
         path: target/debug/*.exe
     - name: Download and Verify
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: windows-binaries
         path: windows-artifacts
@@ -55,12 +55,12 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: macos-binaries
         path: target/debug/
     - name: Download and Verify
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: macos-binaries
         path: macos-artifacts
