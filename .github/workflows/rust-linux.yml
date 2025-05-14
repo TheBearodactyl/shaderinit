@@ -1,0 +1,44 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build
+      run: cargo build --verbose
+    
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: rust-artifact
+        path: target/debug/
+    
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: rust-artifact
+        path: downloaded-artifact/
+    
+    - name: Verify downloaded files
+      run: ls -R downloaded-artifact/
+    
+    - name: Run tests
+      run: cargo test --verbose
+    
+    
+
+            
+
+          
