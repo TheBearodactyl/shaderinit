@@ -1,0 +1,70 @@
+name: Rust Cross-Platform
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build --verbose
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-binaries
+        path: target/debug/
+    - name: Run tests
+      run: cargo test --verbose
+
+  windows-build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build --verbose
+      shell: bash
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-binaries
+        path: target/debug/*.exe
+    - name: Download and Verify
+      uses: actions/download-artifact@v4
+      with:
+        name: windows-binaries
+        path: windows-artifacts
+    - name: List Artifacts
+      run: ls -R windows-artifacts
+      shell: bash
+    - name: Run tests
+      run: cargo test --verbose
+      shell: bash
+
+  macos-build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build --verbose
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-binaries
+        path: target/debug/
+    - name: Download and Verify
+      uses: actions/download-artifact@v4
+      with:
+        name: macos-binaries
+        path: macos-artifacts
+    - name: List Artifacts
+      run: ls -R macos-artifacts
+    - name: Run tests
+      run: cargo test --verbose
