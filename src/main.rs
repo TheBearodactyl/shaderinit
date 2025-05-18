@@ -95,8 +95,8 @@ fn main() {
     let shader = new_shader(&argv.name);
 
     if argv.out_file.is_some() {
-        fs::write(format!("{}.fs", &argv.out_file.as_ref().unwrap()), shader).expect("Fuck.");
+        fs::write(format!("{}", &argv.out_file.unwrap()), shader).expect("AAAAAAA");
     } else {
-        fs::write(argv.name.as_str(), shader).expect("AAAAAAA");
+        fs::write(format!("{}.fs", &argv.name), shader).expect("Fuck.");
     }
 }
